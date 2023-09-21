@@ -1,12 +1,13 @@
 import { useState } from 'react';
+import Home from './views/home/index';
 
 export default function App() {
-  let [count, setCount] = useState(0);
-
+  const [count, setCount] = useState(0);
   return (
     <div>
       <p>{count}</p>
-      <button onClick={() => setCount(count++)}>+1</button>
+      <button onClick={() => setCount(count + 1)}>+1</button>
+      <Home />
     </div>
   );
 }

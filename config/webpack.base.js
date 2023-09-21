@@ -3,12 +3,13 @@ const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
 const TerserPlugin = require('terser-webpack-plugin');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
+const ESLintPlugin = require('eslint-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { appDirectory, isProduction } = require('./env');
+const { appDirectory, isProduction, resolveApp } = require('./env');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: './src/index.jsx',
   output: {
     clean: isProduction,
     path: path.resolve(appDirectory, 'build'),
@@ -21,6 +22,7 @@ module.exports = {
       '@': path.join(appDirectory, './src')
     }
   },
+
   resolveLoader: {
     modules: ['node_modules', path.resolve(appDirectory, './loaders')]
   },
@@ -44,7 +46,6 @@ module.exports = {
           output: {
             ecma: 5,
             comments: false,
-
             ascii_only: true
           }
         }
@@ -58,7 +59,7 @@ module.exports = {
         filename: 'static/css/[name].[contenthash:8].css',
         chunkFilename: 'static/css/[name].[contenthash:8].chunk.css'
       }),
-    new WebpackBar({ name: isProduction ? '正在启动' : '正在打包' }),
+    new WebpackBar({ name: isProduction ? '正在打包' : '正在启动' }),
     new HtmlwebpackPlugin({
       favicon: path.resolve(appDirectory, './public/favicon.ico'),
       template: path.resolve(appDirectory, './public/index.html'), // 使用的模板路径
@@ -83,6 +84,14 @@ module.exports = {
     new webpack.IgnorePlugin({
       contextRegExp: /moment$/,
       resourceRegExp: /locale/
+    }),
+    new ESLintPlugin({
+      extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
+      fix: true,
+      failOnError: true,
+      cache: true,
+      cacheLocation: path.resolve(resolveApp('node_modules'), '.cache/.eslintcache'),
+      cwd: appDirectory
     })
   ].filter(Boolean),
   module: {
@@ -111,8 +120,9 @@ module.exports = {
             ],
             plugins: [
               '@babel/plugin-proposal-class-properties',
-              '@babel/plugin-transform-block-scoping'
-            ]
+              '@babel/plugin-transform-block-scoping',
+              !isProduction && require.resolve('react-refresh/babel')
+            ].filter(Boolean)
           }
         }
       },
