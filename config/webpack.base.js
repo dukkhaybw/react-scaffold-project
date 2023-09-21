@@ -1,8 +1,10 @@
 const path = require('path');
 const webpack = require('webpack');
 const WebpackBar = require('webpackbar');
+const TerserPlugin = require('terser-webpack-plugin');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const { appDirectory, isProduction } = require('./env');
 
 module.exports = {
@@ -21,6 +23,34 @@ module.exports = {
   },
   resolveLoader: {
     modules: ['node_modules', path.resolve(appDirectory, './loaders')]
+  },
+  optimization: {
+    minimize: isProduction,
+    minimizer: [
+      new TerserPlugin({
+        terserOptions: {
+          parse: {
+            ecma: 8
+          },
+          compress: {
+            ecma: 5,
+            warnings: false,
+            comparisons: false,
+            inline: 2
+          },
+          mangle: {
+            safari10: true
+          },
+          output: {
+            ecma: 5,
+            comments: false,
+
+            ascii_only: true
+          }
+        }
+      }),
+      new CssMinimizerPlugin()
+    ]
   },
   plugins: [
     isProduction &&
@@ -56,8 +86,36 @@ module.exports = {
     })
   ].filter(Boolean),
   module: {
-    noParse: /jquery|lodash/, // 不去解析jquery和lodash中的依赖库
+    noParse: /jquery/, // 不去解析jquery和lodash中的依赖库
     rules: [
+      {
+        test: /\.(js|jsx|cjs)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  useBuiltIns: 'usage',
+                  corejs: 3
+                }
+              ],
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic'
+                }
+              ]
+            ],
+            plugins: [
+              '@babel/plugin-proposal-class-properties',
+              '@babel/plugin-transform-block-scoping'
+            ]
+          }
+        }
+      },
       {
         test: /\.(png|jpg|gif|svg|)$/,
         type: 'asset',

@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 const dotenvExpand = require('dotenv-expand');
 
 const isProduction = process.env.NODE_ENV === 'production';
-console.log(isProduction, 'isProduction');
 // 项目根目录路径
 const appDirectory = fs.realpathSync(process.cwd());
 

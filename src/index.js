@@ -1,3 +1,5 @@
-import './style/css/global.css';
-import './style/css/normalize.css';
-console.log(123);
+import { createRoot } from 'react-dom/client';
+import App from './App';
+
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
