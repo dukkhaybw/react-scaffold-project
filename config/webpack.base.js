@@ -22,7 +22,6 @@ module.exports = {
       '@': path.join(appDirectory, './src')
     }
   },
-
   resolveLoader: {
     modules: ['node_modules', path.resolve(appDirectory, './loaders')]
   },

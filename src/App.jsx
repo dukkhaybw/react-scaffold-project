@@ -1,12 +1,13 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Home from './views/home/index';
 
 export default function App() {
-  const [count, setCount] = useState(0);
+  const count = useSelector((state) => state.counter.count);
   return (
     <div>
       <p>{count}</p>
-      <button onClick={() => setCount(count + 1)}>+1</button>
+      <button>+1</button>
+      <hr />
       <Home />
     </div>
   );

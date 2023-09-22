@@ -4,7 +4,7 @@ const baseConfig = require('./webpack.base');
 
 const devConfig = merge(baseConfig, {
   mode: 'development',
-  devtool: 'eval',
+  devtool: 'inline-source-map',
   devServer: {
     port: 3000,
     hot: true,
