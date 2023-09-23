@@ -35,12 +35,15 @@ module.exports = {
     'no-console': 'off',
     'react/no-unescaped-entities': 'off',
     'no-plusplus': 'off',
-    'react/jsx-filename-extension': 'off'
+    'react/jsx-filename-extension': 'off',
+    'no-param-reassign': 'off'
   },
   globals: {
     window: false,
     document: false,
-    navigator: false
+    navigator: false,
+    TIME_OUT: false,
+    BASE_URL: false
   },
   settings: {
     'import/resolver': {

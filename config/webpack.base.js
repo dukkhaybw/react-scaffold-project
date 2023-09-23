@@ -84,6 +84,10 @@ module.exports = {
       contextRegExp: /moment$/,
       resourceRegExp: /locale/
     }),
+    new webpack.DefinePlugin({
+      BASE_URL: JSON.stringify(process.env.BASE_URL),
+      TIME_OUT: JSON.stringify(process.env.TIME_OUT)
+    }),
     new ESLintPlugin({
       extensions: ['js', 'mjs', 'jsx', 'ts', 'tsx'],
       fix: true,

@@ -1,9 +1,11 @@
 import { increment } from '@/store/action/counter';
 import { Button } from 'antd';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home() {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const count = useSelector((state) => state.counter.count);
 
@@ -18,6 +20,7 @@ export default function Home() {
       >
         +1
       </Button>
+      <div style={{ paddingTop: 16 }}>{t('home.hello')}</div>
     </div>
   );
 }

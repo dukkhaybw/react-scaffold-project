@@ -1,27 +1,20 @@
-import { Suspense, lazy } from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 
 import Layout from '@/layout';
 import Home from '@/views/home/index';
 
-const About = lazy(() => import(/* webpackChunkName: "about" */ '@/views/about/index'));
-
 const router = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <Suspense fallback={<>...</>}>
-        <Layout />
-      </Suspense>
-    ),
+    element: <Layout />,
     children: [
       {
-        path: 'home',
+        index: true,
         element: <Home />
       },
       {
         path: 'about',
-        element: <About />
+        lazy: () => import(/* webpackChunkName: "about" */ '@/views/about/index')
       }
     ]
   },
