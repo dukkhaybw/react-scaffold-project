@@ -1,4 +1,5 @@
 import { increment } from '@/store/action/counter';
+import { Button } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function Home() {
@@ -9,13 +10,14 @@ export default function Home() {
   return (
     <div>
       <p>{count}</p>
-      <button
+      <Button
+        type="primary"
         onClick={() => {
           dispatch(increment());
         }}
       >
         +1
-      </button>
+      </Button>
     </div>
   );
 }

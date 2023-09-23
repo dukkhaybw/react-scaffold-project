@@ -32,7 +32,10 @@ module.exports = {
     'react/button-has-type': 'off',
     'import/no-extraneous-dependencies': 'off',
     'default-param-last': 'off',
-    'no-console': 'off'
+    'no-console': 'off',
+    'react/no-unescaped-entities': 'off',
+    'no-plusplus': 'off',
+    'react/jsx-filename-extension': 'off'
   },
   globals: {
     window: false,
