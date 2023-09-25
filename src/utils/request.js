@@ -1,5 +1,5 @@
-import { localCache } from './cache';
 import Request from './http';
+import { localCache } from './cache';
 
 const hyRequest = new Request({
   baseURL: BASE_URL,

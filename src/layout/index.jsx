@@ -1,6 +1,7 @@
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { Link, Outlet, useNavigation } from 'react-router-dom';
+import emitter from '@/utils/eventBus';
 
 function Layout() {
   const navigation = useNavigation();
@@ -8,6 +9,7 @@ function Layout() {
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
+    emitter.emit('changeLanguage', lng);
   };
 
   return (
@@ -20,7 +22,7 @@ function Layout() {
         <Button type="primary" style={{ marginRight: 8 }} onClick={() => changeLanguage('en')}>
           English
         </Button>
-        <Button onClick={() => changeLanguage('zh')}>中文</Button>
+        <Button onClick={() => changeLanguage('zh-ch')}>中文</Button>
       </div>
 
       <nav>

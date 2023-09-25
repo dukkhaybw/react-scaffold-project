@@ -1,7 +1,7 @@
-import { increment } from '@/store/action/counter';
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { increment } from '@/store/action/counter';
 
 export default function Home() {
   const dispatch = useDispatch();
