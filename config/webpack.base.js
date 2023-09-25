@@ -29,6 +29,7 @@ module.exports = {
     minimize: isProduction,
     minimizer: [
       new TerserPlugin({
+        extractComments: false, // 不将注释提取到单独的文件中
         terserOptions: {
           parse: {
             ecma: 8
