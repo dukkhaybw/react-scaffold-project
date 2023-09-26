@@ -1,10 +1,8 @@
-import { applyMiddleware, legacy_createStore as createStore } from 'redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
-import rootReducer from './reducer/index';
+import { configureStore } from '@reduxjs/toolkit';
+import counterReducer from './reducer/counterSlice';
 
-const middleEnhancer = composeWithDevTools(applyMiddleware(thunk));
-
-const store = createStore(rootReducer, middleEnhancer);
-
-export default store;
+export default configureStore({
+  reducer: {
+    counter: counterReducer
+  }
+});

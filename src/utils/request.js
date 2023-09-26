@@ -1,3 +1,7 @@
+/**
+ * 基于网络请求基础库二次封装得来的
+ * 直接用于业务的网络请求模块
+ */
 import Request from './http';
 import { localCache } from './cache';
 

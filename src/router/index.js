@@ -1,11 +1,15 @@
 import { createBrowserRouter } from 'react-router-dom';
-import Layout from '@/layout';
+import Layout, { LayoutLoader } from '@/layout';
+import Login from '@/views/login';
 import Home from '@/views/home/index';
+import ErrorPage from '@/views/error';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
+    loader: LayoutLoader,
+    errorElement: <ErrorPage />,
     children: [
       {
         index: true,
@@ -16,6 +20,10 @@ const router = createBrowserRouter([
         lazy: () => import(/* webpackChunkName: "about" */ '@/views/about/index')
       }
     ]
+  },
+  {
+    path: '/login',
+    element: <Login />
   },
   {
     path: '*',

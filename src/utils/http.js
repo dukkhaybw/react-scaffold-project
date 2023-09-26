@@ -1,24 +1,18 @@
+/**
+ * 网络请求的基础库
+ */
 import axios from 'axios';
 
 class Request {
   constructor(baseConfig) {
     this.instance = axios.create(baseConfig);
-    // 全局的拦截器
-    this.instance.interceptors.request.use(
-      (config) => config,
-      (err) => err
-    );
-
-    this.instance.interceptors.response.use(
-      (res) => res.data,
-      (err) => err
-    );
 
     // 实例的拦截器
     this.instance.interceptors.request.use(
       baseConfig.interceptors?.requestInterceptor,
       baseConfig.interceptors?.requestInterceptorCatch
     );
+
     this.instance.interceptors.response.use(
       baseConfig.interceptors?.responseInterceptor,
       baseConfig.interceptors?.responseInterceptorCatch

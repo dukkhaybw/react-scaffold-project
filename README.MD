@@ -92,3 +92,59 @@ TIME_OUT=10000
 - index.jsx项目入口文件，配置了redux
 - App.jsx配置了国际化，antd，react-router
 - 其他配置类文件不再说明...
+
+## React Redux8使用说明
+
+通过使用React Redux提供的hooks进行和store的各种交互。在函数组件中：
+
+- useSelector:用于从仓库中读取一个值,并且当值变化时，会触发组件更新
+- useDispatch:该方法返回store提供的dispatch方法，然后自己用于派发action
+
+如下代码：
+
+```jsx
+import { Button } from 'antd';
+import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { decrement, increment } from '@/store/reducer/counterSlice';
+import { useState } from 'react';
+
+export default function Home() {
+  const count = useSelector((state) => state.counter.value);
+  const [number, setNumber] = useState(0);
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+
+  return (
+    <div>
+      <p>{count}</p>
+      <Button
+        type="primary"
+        onClick={() => {
+          dispatch(increment());
+        }}
+      >
+        +1
+      </Button>
+
+      <Button
+        type="primary"
+        onClick={() => {
+          dispatch(decrement());
+        }}
+      >
+        -1
+      </Button>
+      <div style={{ paddingTop: 16 }}>{t('home.hello')}</div>
+
+      <hr />
+      <div>
+        {number}
+        <Button onClick={() => setNumber(number + 1)}>+1number</Button>
+      </div>
+    </div>
+  );
+}
+
+Home.displayName = 'Home';
+```

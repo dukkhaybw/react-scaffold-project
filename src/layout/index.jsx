@@ -1,9 +1,20 @@
 import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { Link, Outlet, useNavigation } from 'react-router-dom';
+import { Link, Outlet, redirect, useNavigation } from 'react-router-dom';
 import emitter from '@/utils/eventBus';
+import { localCache } from '@/utils/cache';
 
-function Layout() {
+export async function LayoutLoader(...args) {
+  console.log('Layout loader');
+  console.log(args, '===================');
+  const token = localCache.getCache('token');
+  if (!token) {
+    return redirect('/login');
+  }
+  return null;
+}
+
+export default function Layout() {
   const navigation = useNavigation();
   const { i18n } = useTranslation();
 
@@ -28,7 +39,7 @@ function Layout() {
       <nav>
         <ul>
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
@@ -43,5 +54,3 @@ function Layout() {
     </div>
   );
 }
-
-export default Layout;

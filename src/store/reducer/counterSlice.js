@@ -1,17 +1,23 @@
-import * as types from '../constant/countConstant';
+import { createSlice } from '@reduxjs/toolkit';
 
-const initState = {
-  count: 2
-};
-
-export default function counterReducer(state = initState, action) {
-  const { type } = action;
-  switch (type) {
-    case types.INCREMENT:
-      return { count: state.count + 1 };
-    case types.DECREMENT:
-      return { count: state.count - 1 };
-    default:
-      return state;
+export const counterSlice = createSlice({
+  name: 'counter',
+  initialState: {
+    value: 0
+  },
+  reducers: {
+    increment: (state) => {
+      state.value += 1;
+    },
+    decrement: (state) => {
+      state.value -= 1;
+    },
+    incrementByAmount: (state, action) => {
+      state.value += action.payload;
+    }
   }
-}
+});
+
+export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+
+export default counterSlice.reducer;

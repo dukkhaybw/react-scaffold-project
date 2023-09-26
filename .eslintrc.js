@@ -35,7 +35,8 @@ module.exports = {
     'react/no-unescaped-entities': 'off',
     'no-plusplus': 'off',
     'react/jsx-filename-extension': 'off',
-    'no-param-reassign': 'off'
+    'no-param-reassign': 'off',
+    'react/prop-types': 'off'
   },
   globals: {
     window: false,
