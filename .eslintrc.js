@@ -36,7 +36,8 @@ module.exports = {
     'no-plusplus': 'off',
     'react/jsx-filename-extension': 'off',
     'no-param-reassign': 'off',
-    'react/prop-types': 'off'
+    'react/prop-types': 'off',
+    'import/prefer-default-export': 'off'
   },
   globals: {
     window: false,

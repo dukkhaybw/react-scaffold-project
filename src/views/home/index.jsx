@@ -2,11 +2,11 @@ import { Button } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '@/store/reducer/counterSlice';
-import { useState } from 'react';
+import { Link, Outlet } from 'react-router-dom';
 
 export default function Home() {
   const count = useSelector((state) => state.counter.value);
-  const [number, setNumber] = useState(0);
+
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -31,12 +31,18 @@ export default function Home() {
         -1
       </Button>
       <div style={{ paddingTop: 16 }}>{t('home.hello')}</div>
-
-      <hr />
       <div>
-        {number}
-        <Button onClick={() => setNumber(number + 1)}>+1number</Button>
+        <ul>
+          <li>
+            <Link to="/home">Home</Link>
+          </li>
+          <li>
+            <Link to="test">test</Link>
+          </li>
+        </ul>
       </div>
+      <hr />
+      <Outlet />
     </div>
   );
 }

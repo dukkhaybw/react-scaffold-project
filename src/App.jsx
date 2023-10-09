@@ -11,8 +11,8 @@ import emitter from './utils/eventBus';
 import router from './router';
 
 export default function App() {
+  // 国际化
   const [lang, setLang] = useState('zh-cn');
-
   useEffect(() => {
     emitter.on('changeLanguage', (value) => {
       dayjs.locale(lang);
@@ -22,7 +22,7 @@ export default function App() {
 
   return (
     <ConfigProvider locale={lang === 'en' ? enUS : zhCN}>
-      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />;
+      <RouterProvider router={router} fallbackElement={<p>Loading...</p>} />
     </ConfigProvider>
   );
 }

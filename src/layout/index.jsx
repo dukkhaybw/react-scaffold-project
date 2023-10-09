@@ -4,9 +4,7 @@ import { Link, Outlet, redirect, useNavigation } from 'react-router-dom';
 import emitter from '@/utils/eventBus';
 import { localCache } from '@/utils/cache';
 
-export async function LayoutLoader(...args) {
-  console.log('Layout loader');
-  console.log(args, '===================');
+export async function LayoutLoader() {
   const token = localCache.getCache('token');
   if (!token) {
     return redirect('/login');
@@ -39,7 +37,7 @@ export default function Layout() {
       <nav>
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <Link to="/home">Home</Link>
           </li>
           <li>
             <Link to="/about">About</Link>
