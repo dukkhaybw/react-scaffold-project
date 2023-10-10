@@ -12,7 +12,7 @@ module.exports = {
   entry: './src/index.jsx',
   output: {
     clean: isProduction,
-    path: path.resolve(appDirectory, 'build'),
+    path: path.resolve(appDirectory, 'dist'),
     filename: `js/[name]${isProduction ? '.[chunkhash:8]' : ''}.js`
   },
   resolve: {

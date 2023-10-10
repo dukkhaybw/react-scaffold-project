@@ -142,8 +142,6 @@ export default function Home() {
 Home.displayName = 'Home';
 ```
 
-
-
 ## React-Router-Dom
 
 整个项目的路由系统采用router-config风格进行组织。
@@ -154,29 +152,29 @@ import Layout, { LayoutLoader } from '@/layout';
 import Login from '@/views/login';
 import Home from '@/views/home/index';
 import ErrorPage from '@/views/error';
-import homeChildRoutes from './home';  
+import homeChildRoutes from './home';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     loader: LayoutLoader, // 加载对应的路由前会触发的类似于路由拦截器功能的函数
-    errorElement: <ErrorPage />,  // 路由加载出错加载的组件
+    errorElement: <ErrorPage />, // 路由加载出错加载的组件
     children: [
       {
         path: 'home', // 以相对路径开头，匹配的是：/home
         element: <Home />,
         children: [
-    			...homeChildRoutes,  // home模块下的其他功能模块的路由,建议拆出去
+          ...homeChildRoutes, // home模块下的其他功能模块的路由,建议拆出去
           {
-            path: 'test2',   // 以相对路径开头，匹配的是：/home/test2
+            path: 'test2', // 以相对路径开头，匹配的是：/home/test2
             lazy: <Test2 />
           }
-    		]  
+        ]
       },
       {
         path: 'about',
-        lazy: () => import(/* webpackChunkName: "about" */ '@/views/about/index')  // 懒加载
+        lazy: () => import(/* webpackChunkName: "about" */ '@/views/about/index') // 懒加载
       }
     ]
   },
@@ -191,10 +189,7 @@ const router = createBrowserRouter([
 ]);
 
 export default router;
-
 ```
-
-
 
 ### `<Outlet>`
 
@@ -217,20 +212,16 @@ export default function Layout() {
           </li>
         </ul>
       </nav>
-      <Outlet />  
+      <Outlet />
     </div>
   );
 }
 ```
 
-
-
-
-
 ### 声明式导航
 
 ```jsx
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 function useLogoutTimer() {
   const userIsInactive = useFakeInactiveUser();
@@ -239,15 +230,11 @@ function useLogoutTimer() {
   useEffect(() => {
     if (userIsInactive) {
       fake.logout();
-      navigate("/session-timed-out");
+      navigate('/session-timed-out');
     }
   }, [userIsInactive]);
 }
 ```
-
-
-
-
 
 ### 编程式导航
 
@@ -266,7 +253,7 @@ export default function Root() {
           <ul>
             <li>
                {/* path可以是相对路径（相对于当前路径），也可以是绝对路径 */}
-              <Link to=`/home`>Your Name</Link>  
+              <Link to=`/home`>Your Name</Link>
             </li>
             <li>
               <Link to=`/login`>Your Friend</Link>
@@ -281,62 +268,52 @@ export default function Root() {
 }
 ```
 
-
-
 ### 路由间传参
 
 ```jsx
 /* other imports */
-import Root from "./routes/root";
-import { getContacts } from "../contacts";
+import Root from './routes/root';
+import { getContacts } from '../contacts';
 
 export async function loader(...args) {
   // args 中也函数路由参数
   const contacts = await getContacts();
-  return { contacts,args };
+  return { contacts, args };
 }
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <Root />,
     errorElement: <ErrorPage />,
-    loader: rootLoader,  // 可以在该rootLoader函数获取或者设置参数，不是必选的，需要时再使用
+    loader: rootLoader, // 可以在该rootLoader函数获取或者设置参数，不是必选的，需要时再使用
     children: [
       {
-        path: "contacts/:contactId",
-        element: <Contact />,
-      },
-    ],
-  },
+        path: 'contacts/:contactId',
+        element: <Contact />
+      }
+    ]
+  }
 ]);
 ```
 
 在组件中获取上面loader函数中设置的参数
 
 ```jsx
-import {
-  Outlet,
-  Link,
-  useLoaderData,
-} from "react-router-dom";
-import { getContacts } from "../contacts";
+import { Outlet, Link, useLoaderData } from 'react-router-dom';
+import { getContacts } from '../contacts';
 
 /* other code */
 
 export default function Root() {
-  const { contacts } = useLoaderData();   // 这里就是loader返回的数据，如果默认不配置上面的loader，那也可以根据动态路由获取路由中的参数
+  const { contacts } = useLoaderData(); // 这里就是loader返回的数据，如果默认不配置上面的loader，那也可以根据动态路由获取路由中的参数
   return (
-      <div id="sidebar">
-        <h1>React Router Contacts</h1>
-      </div>
+    <div id="sidebar">
+      <h1>React Router Contacts</h1>
+    </div>
   );
 }
 ```
-
-
-
-
 
 ```jsx
 import * as React from 'react';
@@ -360,24 +337,16 @@ function App() {
 }
 ```
 
-
-
-
-
 ### redirect
 
 路由重定向
 
 ```jsx
-import { redirect } from "react-router-dom";
+import { redirect } from 'react-router-dom';
 
 redirect(`/contacts/${params.contactId}`);
 /* existing code */
 ```
-
-
-
-
 
 ## 编码规范
 
@@ -410,8 +379,6 @@ public class BeansFactory {
 }
 ```
 
-
-
 ### 代码风格（Code Style）
 
 - **善用空行分割单元块**
@@ -419,3 +386,34 @@ public class BeansFactory {
 - 在类中，成员变量排在函数的前面。成员变量之间或函数之间，都是按照“先静态（静态函数或静态成员变量）、后普通（非静态函数或非静态成员变量）”的方式来排列的。除此之外，成员变量之间或函数之间，还会按照作用域范围从大到小的顺序来排列，先写 public成员变量或函数，然后是 protected 的，最后是 private 的。
 - 避免函数参数过多
 
+## Git提交规范
+
+Git提交规范参考的是commitlint(一个用于规范化 Git 提交信息的工具，它通过配置规则来验证提交信息的格式和结构)。
+
+下面是一些常见的 Git 提交说明的规范和示例：
+
+1. 提交类型（type）：
+
+   - `feat`: 新功能（feature）
+   - `fix`: 修复 bug
+   - `docs`: 文档更新
+   - `style`: 代码样式调整（不影响功能）
+   - `refactor`: 代码重构（不修复 bug 或添加新功能）
+   - `test`: 添加或修改测试
+   - `chore`: 构建过程或辅助工具的变动
+   - `build`: 构建相关的变动，例如修改构建脚本、配置文件等。
+   - `ci`: 持续集成（CI）配置的变动，例如修改 CI 脚本、流程、工作流等。
+   - `perf`: 性能优化相关的变动，例如改进算法、提高代码执行效率等。
+   - `revert`: 撤销之前的提交，通常使用在回滚某个提交的情况下。
+   - `config`: 配置文件的变动，例如修改环境配置、依赖管理等。
+   - `i18n`: 国际化相关的变动，例如添加、更新或修复多语言翻译。
+   - `release`: 发布新版本或版本管理相关的变动。
+   - `merge`: 合并分支或解决合并冲突的变动。
+
+2. 提交主题（subject）：对提交的简要描述，通常使用动词开头的短语。
+
+一个符合 `commitlint` 规范的提交信息可以如下所示：
+
+```shell
+<type>: <subject>
+```
